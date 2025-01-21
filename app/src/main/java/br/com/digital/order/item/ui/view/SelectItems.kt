@@ -1,4 +1,4 @@
-package br.com.digital.order.food.ui.view
+package br.com.digital.order.item.ui.view
 
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
@@ -22,9 +22,9 @@ import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import br.com.digital.order.food.data.dto.FoodResponseDTO
-import br.com.digital.order.food.ui.viewmodel.FoodViewModel
-import br.com.digital.order.food.utils.FoodUtils.NO_FOODS_SELECTED
+import br.com.digital.order.item.data.dto.ItemResponseDTO
+import br.com.digital.order.item.ui.viewmodel.ItemViewModel
+import br.com.digital.order.item.utils.ItemUtils.NO_ITEM_SELECTED
 import br.com.digital.order.networking.resources.AlternativesRoutes
 import br.com.digital.order.networking.resources.ObserveNetworkStateHandler
 import br.com.digital.order.ui.components.Description
@@ -36,30 +36,30 @@ import br.com.digital.order.ui.components.Tag
 import br.com.digital.order.ui.components.Title
 import br.com.digital.order.ui.theme.Themes
 import br.com.digital.order.utils.OrdersUtils.EMPTY_TEXT
-import br.com.digital.order.utils.StringsUtils.ADD_FOODS
+import br.com.digital.order.utils.StringsUtils.ADD_ITEMS
 import br.com.digital.order.utils.StringsUtils.CANCEL
 import br.com.digital.order.utils.StringsUtils.CONFIRM
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun SelectFoods(
+fun SelectItems(
     onDismiss: () -> Unit = {},
-    onResult: (List<FoodResponseDTO>) -> Unit = {},
+    onResult: (List<ItemResponseDTO>) -> Unit = {},
     goToAlternativeRoutes: (AlternativesRoutes?) -> Unit = {}
 ) {
-    val viewModel: FoodViewModel = koinViewModel()
+    val viewModel: ItemViewModel = koinViewModel()
     var isLoading: Boolean by remember { mutableStateOf(value = false) }
     var name: String by remember { mutableStateOf(value = EMPTY_TEXT) }
-    val foods = remember { mutableStateListOf<FoodResponseDTO>() }
-    var foodsSelected = remember { mutableStateListOf<FoodResponseDTO>() }
+    val items = remember { mutableStateListOf<ItemResponseDTO>() }
+    var itemsSelected = remember { mutableStateListOf<ItemResponseDTO>() }
     var observer: Triple<Boolean, Boolean, String> by remember {
         mutableStateOf(value = Triple(first = false, second = false, third = EMPTY_TEXT))
     }
     SelectObject(
         body = {
             Title(
-                title = ADD_FOODS,
+                title = ADD_ITEMS,
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center
             )
@@ -69,7 +69,7 @@ fun SelectFoods(
                 isError = observer.second,
                 message = observer.third,
                 onGo = {
-                    viewModel.findFoodByName(name = name)
+                    viewModel.findItemByName(name = name)
                     isLoading = true
                 }
             )
@@ -82,29 +82,29 @@ fun SelectFoods(
                     CircularProgressIndicator()
                 }
             }
-            if (foods.isNotEmpty()) {
-                SelectFoods(
-                    foods = foods,
-                    foodsSelected = foodsSelected,
+            if (items.isNotEmpty()) {
+                SelectItems(
+                    items = items,
+                    itemsSelected = itemsSelected,
                     onResult = {
-                        foodsSelected = it.toMutableStateList()
+                        itemsSelected = it.toMutableStateList()
                     }
                 )
-                if (foodsSelected.isNotEmpty()) {
-                    ListFoodsAvailable(foods = foodsSelected)
+                if (itemsSelected.isNotEmpty()) {
+                    ListItemsAvailable(item = itemsSelected)
                 }
             }
             LoadingButton(
                 background = Themes.colors.success,
                 label = CONFIRM,
                 onClick = {
-                    if (foodsSelected.isNotEmpty()) {
-                        viewModel.resetFood()
-                        onResult(foodsSelected)
+                    if (itemsSelected.isNotEmpty()) {
+                        viewModel.resetItem()
+                        onResult(itemsSelected)
                         onDismiss()
                     } else {
                         observer =
-                            Triple(first = false, second = true, third = NO_FOODS_SELECTED)
+                            Triple(first = false, second = true, third = NO_ITEM_SELECTED)
                     }
                 }
             )
@@ -112,17 +112,17 @@ fun SelectFoods(
                 background = Themes.colors.error,
                 label = CANCEL,
                 onClick = {
-                    viewModel.resetFood()
+                    viewModel.resetItem()
                     onDismiss()
                 }
             )
         },
         onDismiss = {
-            viewModel.resetFood()
+            viewModel.resetItem()
             onDismiss()
         }
     )
-    ObserveNetworkStateHandlerFindFoodByName(
+    ObserveNetworkStateHandlerFindItemByName(
         viewModel = viewModel,
         onError = {
             observer = it
@@ -132,10 +132,10 @@ fun SelectFoods(
         onSuccessful = { result ->
             observer = Triple(first = false, second = false, third = EMPTY_TEXT)
             isLoading = false
-            foods.clear()
-            result.forEach { food ->
-                if (!foods.contains(element = food)) {
-                    foods.add(element = food)
+            items.clear()
+            result.forEach { item ->
+                if (!items.contains(element = item)) {
+                    items.add(element = item)
                 }
             }
         }
@@ -143,26 +143,26 @@ fun SelectFoods(
 }
 
 @Composable
-private fun SelectFoods(
-    foods: List<FoodResponseDTO>,
-    foodsSelected: MutableList<FoodResponseDTO>,
-    onResult: (List<FoodResponseDTO>) -> Unit = {}
+private fun SelectItems(
+    items: List<ItemResponseDTO>,
+    itemsSelected: MutableList<ItemResponseDTO>,
+    onResult: (List<ItemResponseDTO>) -> Unit = {}
 ) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(space = Themes.size.spaceSize8),
         modifier = Modifier
     ) {
-        items(foods) { food ->
+        items(items) { item ->
             Tag(
-                text = food.name,
-                value = food,
+                text = item.name,
+                value = item,
                 onCheck = { isChecked ->
                     if (isChecked) {
-                        foodsSelected.add(food)
+                        itemsSelected.add(item)
                     } else {
-                        foodsSelected.remove(food)
+                        itemsSelected.remove(item)
                     }
-                    onResult(foodsSelected)
+                    onResult(itemsSelected)
                 }
             )
         }
@@ -170,8 +170,8 @@ private fun SelectFoods(
 }
 
 @Composable
-private fun ListFoodsAvailable(
-    foods: List<FoodResponseDTO>
+private fun ListItemsAvailable(
+    item: List<ItemResponseDTO>
 ) {
     val scrollState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
@@ -188,20 +188,20 @@ private fun ListFoodsAvailable(
                 }
             )
     ) {
-        items(foods) { foods ->
-            Description(description = foods.name)
+        items(item) { items ->
+            Description(description = items.name)
         }
     }
 }
 
 @Composable
-private fun ObserveNetworkStateHandlerFindFoodByName(
-    viewModel: FoodViewModel,
+private fun ObserveNetworkStateHandlerFindItemByName(
+    viewModel: ItemViewModel,
     onError: (Triple<Boolean, Boolean, String>) -> Unit = {},
     goToAlternativeRoutes: (AlternativesRoutes?) -> Unit = {},
-    onSuccessful: (List<FoodResponseDTO>) -> Unit = {}
+    onSuccessful: (List<ItemResponseDTO>) -> Unit = {}
 ) {
-    val state: ObserveNetworkStateHandler<List<FoodResponseDTO>> by remember { viewModel.findFoodByName }
+    val state: ObserveNetworkStateHandler<List<ItemResponseDTO>> by remember { viewModel.findItemByName }
     ObserveNetworkStateHandler(
         state = state,
         onLoading = {},
