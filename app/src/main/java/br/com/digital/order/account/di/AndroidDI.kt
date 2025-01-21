@@ -4,7 +4,6 @@ import br.com.digital.order.account.data.repository.remote.AccountAPI
 import br.com.digital.order.account.data.repository.remote.AccountRemoteDataSource
 import br.com.digital.order.account.data.repository.remote.AccountRemoteImpDataSource
 import br.com.digital.order.account.ui.viewmodel.AccountViewModel
-import br.com.digital.order.dashboard.ui.viewmodel.DashboardViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
@@ -15,5 +14,4 @@ val androidModule = module {
     factory { AccountRemoteImpDataSource(get()) }
     single { get<Retrofit>().create(AccountAPI::class.java) }
     viewModel { AccountViewModel(get(), get(), get()) }
-    viewModel { DashboardViewModel(get()) }
 }

@@ -2,6 +2,7 @@ package br.com.digital.order
 
 import android.app.Application
 import br.com.digital.order.account.di.androidModule
+import br.com.digital.order.dashboard.di.dashboardModule
 import br.com.digital.order.networking.di.networkModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -17,6 +18,7 @@ class ApplicationApp : Application() {
             modules(
                 listOf(
                     androidModule,
+                    dashboardModule,
                     networkModule
                 )
             )

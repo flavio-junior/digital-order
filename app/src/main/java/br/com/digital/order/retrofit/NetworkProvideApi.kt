@@ -18,7 +18,7 @@ fun provideRetrofit(
     gsonConverterFactory: GsonConverterFactory
 ): Retrofit {
     return Retrofit.Builder()
-        .baseUrl(BuildConfig.BASE_URL_APP)
+        .baseUrl("http://${BuildConfig.BASE_URL_APP}")
         .client(okHttpClient)
         .addConverterFactory(gsonConverterFactory)
         .build()
