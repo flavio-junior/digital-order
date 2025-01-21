@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Comanda Digital</string>
+    <string name="password">Senha</string>
+    <string name="email">Email</string>
+    <string name="orders">Pedidos</string>
+    <string name="SETTINGS">Ajustes</string>
+    <string name="pdv">PDV</string>
+    <string name="reservations">Reservas</string>
+    <string name="delivery">Delivery</string>
+</resources>
