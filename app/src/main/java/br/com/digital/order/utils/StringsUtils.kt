@@ -78,6 +78,7 @@ object StringsUtils {
     const val ADD_PRODUCT = "Adicionar Produto"
     const val ADD_PRODUCTS = "Adicionar produtos"
     const val ADD_RESERVATION = "Adicionar Reserva"
+    const val ADD_RESERVATIONS = "Adicionar reservas"
     const val NAME_PRODUCT = "Nome do Produto"
     const val ADD_FOOD = "Adicionar Prato"
     const val ADD_FOODS = "Adicionar Pratos"

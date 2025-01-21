@@ -24,6 +24,7 @@ import br.com.digital.order.utils.NumbersUtils.NUMBER_ZERO
 import br.com.digital.order.utils.StringsUtils.ADD_FOOD
 import br.com.digital.order.utils.StringsUtils.ADD_ITEM
 import br.com.digital.order.utils.StringsUtils.ADD_PRODUCT
+import br.com.digital.order.utils.StringsUtils.ITEMS
 import br.com.digital.order.utils.StringsUtils.SELECTED_ITEMS
 
 @Composable
@@ -37,6 +38,7 @@ fun BodyRequestsOrder(
     var addNewProduct: Boolean by remember { mutableStateOf(value = false) }
     var addNewFood: Boolean by remember { mutableStateOf(value = false) }
     var addNewItem: Boolean by remember { mutableStateOf(value = false) }
+    Description(description = "$ITEMS:")
     OptionButton(
         icon = R.drawable.add,
         label = ADD_PRODUCT,

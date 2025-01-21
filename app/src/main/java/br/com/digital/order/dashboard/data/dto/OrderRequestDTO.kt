@@ -2,6 +2,7 @@ package br.com.digital.order.dashboard.data.dto
 
 import br.com.digital.order.common.dto.ObjectRequestDTO
 import br.com.digital.order.dashboard.domain.type.TypeOrder
+import br.com.digital.order.reservation.data.dto.ReservationResponseDTO
 import kotlinx.serialization.Serializable
 
 @Serializable

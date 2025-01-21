@@ -104,8 +104,17 @@ private fun NavGraphBuilder.dashboardNavigation(
         )
     }
     composable(RouteApp.Reservation.item) {
-        ReservationScreen {
-            navController.popBackStack()
-        }
+        ReservationScreen(
+            goToBack = {
+                navController.popBackStack()
+            },
+            goToAlternativeRoutes = {
+                navigateToAlternativeRoutes(
+                    navController = navController,
+                    currentScreen = RouteApp.Reservation.item,
+                    alternativeRoutes = it
+                )
+            }
+        )
     }
 }

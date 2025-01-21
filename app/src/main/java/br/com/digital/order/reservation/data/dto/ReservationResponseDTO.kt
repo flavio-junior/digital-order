@@ -1,4 +1,4 @@
-package br.com.digital.order.dashboard.data.dto
+package br.com.digital.order.reservation.data.dto
 
 import br.com.digital.order.dashboard.domain.status.ReservationStatus
 import kotlinx.serialization.Serializable
