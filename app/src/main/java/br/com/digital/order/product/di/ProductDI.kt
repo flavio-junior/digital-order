@@ -15,5 +15,5 @@ val productModule = module {
     factory { ProductRepository(androidContext(), get()) }
     factory { ProductRemoteImplDataSource(get()) }
     single { get<Retrofit>().create(ProductRemoteDataSourceAPI::class.java) }
-    viewModel { ProductViewModel(get(), get()) }
+    viewModel { ProductViewModel(get()) }
 }

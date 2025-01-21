@@ -22,6 +22,7 @@ import br.com.digital.order.common.dto.TypeItem
 import br.com.digital.order.dashboard.data.dto.OrderRequestDTO
 import br.com.digital.order.dashboard.domain.type.TypeOrder
 import br.com.digital.order.dashboard.ui.viewmodel.DashboardViewModel
+import br.com.digital.order.food.ui.view.SelectFoods
 import br.com.digital.order.networking.resources.AlternativesRoutes
 import br.com.digital.order.networking.resources.ObserveNetworkStateHandler
 import br.com.digital.order.product.ui.view.SelectProducts
@@ -160,6 +161,28 @@ fun OrderScreen(
                     )
                     if (!objectsToSave.contains(element = productSelected)) {
                         objectsToSave.add(productSelected)
+                    }
+                }
+                addNewFood = false
+            },
+            goToAlternativeRoutes = goToAlternativeRoutes
+        )
+    }
+    if (addNewFood) {
+        SelectFoods(
+            onDismiss = {
+                addNewFood = false
+            },
+            onResult = {
+                it.forEach { product ->
+                    val foodSelected = ObjectRequestDTO(
+                        name = product.name,
+                        identifier = product.id,
+                        quantity = 0,
+                        type = TypeItem.FOOD
+                    )
+                    if (!objectsToSave.contains(element = foodSelected)) {
+                        objectsToSave.add(foodSelected)
                     }
                 }
                 addNewFood = false

@@ -7,13 +7,11 @@ import androidx.lifecycle.viewModelScope
 import br.com.digital.order.networking.resources.ObserveNetworkStateHandler
 import br.com.digital.order.product.data.dto.ProductResponseDTO
 import br.com.digital.order.product.data.repository.ProductRepository
-import br.com.digital.order.product.domain.converter.ConverterProduct
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 class ProductViewModel(
-    private val repository: ProductRepository,
-    private val converter: ConverterProduct
+    private val repository: ProductRepository
 ): ViewModel() {
 
     private val _findProductByName =
