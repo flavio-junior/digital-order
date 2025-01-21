@@ -9,7 +9,7 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 
-interface AccountAPI {
+interface AccountRemoteDataSourceAPI {
 
     @POST("/api/auth/v1/signIn")
     suspend fun signIn(@Body signInRequestDTO: SignInRequestDTO): Response<TokenResponseDTO>

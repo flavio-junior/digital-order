@@ -2,7 +2,7 @@ package br.com.digital.order.networking.di
 
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.preferencesDataStoreFile
-import br.com.digital.order.account.data.repository.remote.AccountAPI
+import br.com.digital.order.account.data.repository.remote.AccountRemoteDataSourceAPI
 import br.com.digital.order.account.domain.converter.ConverterToken
 import br.com.digital.order.retrofit.ProvideAccessTokenInterceptor
 import br.com.digital.order.retrofit.ProvideAuthenticator
@@ -33,7 +33,7 @@ val networkModule = module {
     single { provideRefreshTokenOkHttpClient(get()) }
 
     single { ConverterToken() }
-    single { get<Retrofit>().create(AccountAPI::class.java) }
+    single { get<Retrofit>().create(AccountRemoteDataSourceAPI::class.java) }
 
     singleOf(::LocalStorage)
     single {

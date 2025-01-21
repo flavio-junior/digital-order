@@ -1,7 +1,7 @@
 package br.com.digital.order.retrofit
 
 import br.com.digital.order.account.data.repository.local.LocalStorage
-import br.com.digital.order.account.data.repository.remote.AccountAPI
+import br.com.digital.order.account.data.repository.remote.AccountRemoteDataSourceAPI
 import br.com.digital.order.account.data.vo.TokenResponseVO
 import br.com.digital.order.account.domain.converter.ConverterToken
 import br.com.digital.order.utils.OrdersUtils.AUTHORIZATION
@@ -15,7 +15,7 @@ import okhttp3.Route
 class ProvideAuthenticator(
     private val localStorage: LocalStorage,
     private val converterToken: ConverterToken,
-    private val networkingAPI: AccountAPI
+    private val networkingAPI: AccountRemoteDataSourceAPI
 ) : Authenticator {
 
     override fun authenticate(route: Route?, response: Response): Request? {

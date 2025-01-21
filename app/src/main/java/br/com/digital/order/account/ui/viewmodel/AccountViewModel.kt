@@ -12,13 +12,13 @@ import br.com.digital.order.account.domain.converter.ConverterToken
 import br.com.digital.order.networking.resources.ObserveNetworkStateHandler
 import br.com.digital.order.utils.OrdersUtils.INVALID_EMAIL
 import br.com.digital.order.utils.validateEmail
-import br.com.digital.order.account.data.repository.remote.AccountRemoteDataSource
+import br.com.digital.order.account.data.repository.remote.AccountRepository
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 class AccountViewModel(
     private val localStorage: LocalStorage,
-    private val repository: AccountRemoteDataSource,
+    private val repository: AccountRepository,
     private val converterToken: ConverterToken
 ) : ViewModel(), AccountViewModelImpl {
 

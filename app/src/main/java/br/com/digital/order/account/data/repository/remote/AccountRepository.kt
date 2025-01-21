@@ -7,7 +7,7 @@ import br.com.digital.order.networking.resources.toResultFlow
 import br.com.digital.order.account.data.dto.SignInRequestDTO
 import kotlinx.coroutines.flow.Flow
 
-class AccountRemoteDataSource(
+class AccountRepository(
     private val context: Context,
     private val accountRemoteImpDataSource: AccountRemoteImpDataSource
 ) {

@@ -1,7 +1,7 @@
 package br.com.digital.order.retrofit
 
 import br.com.digital.order.account.data.repository.local.LocalStorage
-import br.com.digital.order.account.data.repository.remote.AccountAPI
+import br.com.digital.order.account.data.repository.remote.AccountRemoteDataSourceAPI
 import br.com.digital.order.account.domain.converter.ConverterToken
 import br.com.digital.order.utils.OrdersUtils.TIME_SECONDS
 import okhttp3.OkHttpClient
@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit
 fun provideAuthenticatorOkHttpClient(
     localStorage: LocalStorage,
     converterToken: ConverterToken,
-    networkingAPI: AccountAPI
+    networkingAPI: AccountRemoteDataSourceAPI
 ): OkHttpClient {
     return OkHttpClient
         .Builder()

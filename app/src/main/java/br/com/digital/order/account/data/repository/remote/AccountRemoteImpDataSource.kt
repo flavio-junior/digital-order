@@ -5,14 +5,14 @@ import br.com.digital.order.account.data.dto.SignInRequestDTO
 import retrofit2.Response
 
 class AccountRemoteImpDataSource(
-    private val guidePointAPI: AccountAPI
+    private val accountRemoteDataSourceAPI: AccountRemoteDataSourceAPI
 ) {
 
     suspend fun signIn(signInRequestDTO: SignInRequestDTO): Response<TokenResponseDTO> {
-        return guidePointAPI.signIn(signInRequestDTO)
+        return accountRemoteDataSourceAPI.signIn(signInRequestDTO)
     }
 
     suspend fun refreshToken(email: String): Response<TokenResponseDTO> {
-        return guidePointAPI.refreshToken(email = email)
+        return accountRemoteDataSourceAPI.refreshToken(email = email)
     }
 }
