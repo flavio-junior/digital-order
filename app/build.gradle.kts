@@ -39,13 +39,8 @@ android {
 
             buildConfigField(
                 type = "String",
-                name = "API_KEY_DEV",
+                name = "BASE_URL_APP",
                 value = "\"${proprieties.getProperty("API_KEY_DEV")}\""
-            )
-            buildConfigField(
-                type = "int",
-                name = "API_PORT_DEV",
-                value = proprieties.getProperty("API_PORT_DEV")?.toInt().toString()
             )
         }
 
@@ -61,13 +56,8 @@ android {
 
             buildConfigField(
                 type = "String",
-                name = "API_KEY_PROD",
+                name = "BASE_URL_APP",
                 value = "\"${proprieties.getProperty("API_KEY_PROD")}\""
-            )
-            buildConfigField(
-                type = "int",
-                name = "API_PORT_PROD",
-                value = proprieties.getProperty("API_PORT_PROD")?.toInt().toString()
             )
         }
     }
@@ -95,15 +85,13 @@ dependencies {
     testImplementation(libs.junit)
     implementation(libs.material)
     implementation(libs.datastore.preferences)
-    implementation(libs.androidx.datastore.preferences.core)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.koin.androidx.compose)
-    implementation(libs.ktor.client.okhttp)
-    implementation(libs.ktor.client.core)
-    implementation(libs.ktor.client.content.negotiation)
-    implementation(libs.ktor.serialization.kotlinx.json)
-    implementation(libs.ktor.client.logging)
-    implementation(libs.ktor.client.auth)
+    implementation(libs.logging.interceptor)
+    implementation(libs.okhttp)
+    implementation(libs.converter.gson)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.mlkit.translate)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))

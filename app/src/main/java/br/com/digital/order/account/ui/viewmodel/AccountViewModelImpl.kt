@@ -1,6 +1,6 @@
-package br.com.digital.store.features.account.viewmodel
+package br.com.digital.order.account.ui.viewmodel
 
-import br.com.digital.store.features.account.data.dto.SignInRequestDTO
+import br.com.digital.order.account.data.dto.SignInRequestDTO
 import br.com.digital.order.account.data.dto.TokenResponseDTO
 
 internal interface AccountViewModelImpl {

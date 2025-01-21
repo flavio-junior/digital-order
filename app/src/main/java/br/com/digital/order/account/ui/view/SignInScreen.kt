@@ -19,11 +19,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import br.com.digital.order.R
+import br.com.digital.order.account.data.dto.SignInRequestDTO
 import br.com.digital.order.account.data.dto.TokenResponseDTO
 import br.com.digital.order.account.ui.viewmodel.AccountViewModel
 import br.com.digital.order.networking.resources.AlternativesRoutes
 import br.com.digital.order.networking.resources.ObserveNetworkStateHandler
-import br.com.digital.order.ui.components.IsErrorMessage
 import br.com.digital.order.ui.components.LoadingButton
 import br.com.digital.order.ui.components.ObserveNetworkStateHandler
 import br.com.digital.order.ui.components.SimpleText
@@ -36,8 +36,7 @@ import br.com.digital.order.utils.StringsUtils.FORGOT_PASS
 import br.com.digital.order.utils.StringsUtils.NOT_BLANK_OR_EMPTY
 import br.com.digital.order.utils.isNotBlankAndEmpty
 import br.com.digital.order.utils.onClickable
-import br.com.digital.store.features.account.data.dto.SignInRequestDTO
-import org.koin.mp.KoinPlatform.getKoin
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 internal fun SignInScreen(
@@ -45,7 +44,7 @@ internal fun SignInScreen(
     goToSendRecoverTokenScreen: () -> Unit = {},
     goToAlternativeRoutes: (AlternativesRoutes?) -> Unit = {}
 ) {
-    val viewModel: AccountViewModel = getKoin().get()
+    val viewModel: AccountViewModel = koinViewModel()
     var email: String by remember { mutableStateOf(value = EMPTY_TEXT) }
     var password: String by remember { mutableStateOf(value = EMPTY_TEXT) }
     var isError: Boolean by remember { mutableStateOf(value = false) }
@@ -82,7 +81,6 @@ internal fun SignInScreen(
                 password = it.second
             }
         )
-        IsErrorMessage(isError = isError, message = errorMessage)
         ForgetPassword(goToSendRecoverTokenScreen = goToSendRecoverTokenScreen)
         LoadingButton(
             onClick = {
@@ -168,7 +166,6 @@ private fun ObserveStateSignIn(
         onSuccess = {
             onError(Triple(first = false, second = false, third = EMPTY_TEXT))
             state.result?.let {
-                viewModel.saveToken(token = it)
                 goToDashboardScreen()
             }
         }

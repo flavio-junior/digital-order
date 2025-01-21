@@ -4,32 +4,26 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.digital.store.features.account.data.dto.SignInRequestDTO
+import br.com.digital.order.account.data.dto.SignInRequestDTO
 import br.com.digital.order.account.data.dto.TokenResponseDTO
-import br.com.digital.order.account.data.repository.AccountRepository
 import br.com.digital.order.account.data.repository.local.LocalStorage
 import br.com.digital.order.account.data.vo.TokenResponseVO
 import br.com.digital.order.account.domain.converter.ConverterToken
 import br.com.digital.order.networking.resources.ObserveNetworkStateHandler
 import br.com.digital.order.utils.OrdersUtils.INVALID_EMAIL
 import br.com.digital.order.utils.validateEmail
-import br.com.digital.store.features.account.viewmodel.AccountViewModelImpl
-import br.com.digital.store.features.account.viewmodel.RefreshToken
+import br.com.digital.order.account.data.repository.remote.AccountRemoteDataSource
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 class AccountViewModel(
     private val localStorage: LocalStorage,
-    private val repository: AccountRepository,
+    private val repository: AccountRemoteDataSource,
     private val converterToken: ConverterToken
 ) : ViewModel(), AccountViewModelImpl {
 
     private val _signIn =
-        mutableStateOf<ObserveNetworkStateHandler<TokenResponseDTO>>(
-            ObserveNetworkStateHandler.Loading(
-                l = false
-            )
-        )
+        mutableStateOf<ObserveNetworkStateHandler<TokenResponseDTO>>(ObserveNetworkStateHandler.Loading(l = false))
     val signIn: State<ObserveNetworkStateHandler<TokenResponseDTO>> = _signIn
 
     private val _getTokenSaved =
@@ -51,7 +45,7 @@ class AccountViewModel(
     override fun signIn(signInRequestDTO: SignInRequestDTO) {
         if (validateEmail(email = signInRequestDTO.email)) {
             viewModelScope.launch {
-                repository.signIn(signIn = signInRequestDTO)
+                repository.signIn(signInRequestDTO = signInRequestDTO)
                     .onStart {
                         _signIn.value = ObserveNetworkStateHandler.Loading(l = true)
                     }

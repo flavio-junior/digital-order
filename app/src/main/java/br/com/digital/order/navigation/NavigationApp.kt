@@ -52,11 +52,13 @@ private fun NavGraphBuilder.signInNavigation(
         SignInScreen(
             goToDashboardScreen = {
                 navController.navigate(route = RouteApp.Dashboard.item) {
-                    popUpTo(RouteApp.SignIn.item) { inclusive = true }
+                    popUpTo(RouteApp.SignIn.item) {
+                        inclusive = true
+                    }
                 }
             },
             goToSendRecoverTokenScreen = {},
-            goToAlternativeRoutes = {}
+            //goToAlternativeRoutes = {}
         )
     }
 }

@@ -36,5 +36,5 @@ object NumbersUtils {
     const val NUMBER_FIFTY = 50
     const val NUMBER_SIXTY = 60
     const val NUMBER_EIGHTY = 80
-    const val NUMBER_ONE_HUNDRED = 100
+    const val NUMBER_ONE_HUNDRED = 100L
 }

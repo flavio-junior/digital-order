@@ -12,4 +12,12 @@ object OrdersUtils {
     const val CREATE_DELIVERY_ORDER = "Criar Pedido Para Entrega"
     const val CREATE_ORDER = "Criar Pedido Para Retirada"
     const val CREATE_RESERVATION = "Criar Reserva"
+    const val ERROR_CONNECTION_WITH_NETWORKING = "Ops! Parece que você está sem internet."
+    const val ERROR_INTERNAL_SERVER = "Ops! Parece que algo não saiu como esperado. Tente novamente mais tarde."
+    const val ERROR_INTERNAL_APP = "Ops! Algo não saiu como esperado. Tente novamente mais tarde."
+    const val ERROR_EXTERNAL = "Ops! Algo não saiu como esperado. Tente novamente mais tarde."
+    const val AUTHORIZATION = "Authorization"
+    const val BEARER = "Bearer"
+    const val APPLICATION_JSON = "application/json"
+    const val TIME_SECONDS: Long = 60
 }

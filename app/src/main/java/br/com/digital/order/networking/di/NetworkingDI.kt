@@ -1,36 +1,44 @@
 package br.com.digital.order.networking.di
 
-import io.ktor.client.HttpClient
-import io.ktor.client.plugins.DefaultRequest
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.plugins.logging.LogLevel
-import io.ktor.client.plugins.logging.Logger
-import io.ktor.client.plugins.logging.Logging
-import io.ktor.client.plugins.logging.SIMPLE
-import io.ktor.http.ContentType
-import io.ktor.http.contentType
-import io.ktor.serialization.kotlinx.json.json
-import kotlinx.serialization.json.Json
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.preferencesDataStoreFile
+import br.com.digital.order.account.data.repository.remote.AccountAPI
+import br.com.digital.order.account.domain.converter.ConverterToken
+import br.com.digital.order.retrofit.ProvideAccessTokenInterceptor
+import br.com.digital.order.retrofit.ProvideAuthenticator
+import br.com.digital.order.retrofit.ProvideRefreshTokenInterceptor
+import br.com.digital.order.retrofit.provideAccessTokenOkHttpClient
+import br.com.digital.order.retrofit.provideAuthenticatorOkHttpClient
+import br.com.digital.order.retrofit.provideConverterFactory
+import br.com.digital.order.retrofit.provideLoggingInterceptor
+import br.com.digital.order.retrofit.provideRefreshTokenOkHttpClient
+import br.com.digital.order.retrofit.provideRetrofit
+import br.com.digital.order.utils.OrdersUtils.LOCAL_STORAGE
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
+import retrofit2.Retrofit
+import br.com.digital.order.account.data.repository.local.LocalStorage
 
 val networkModule = module {
+    single { provideConverterFactory() }
+    single { provideLoggingInterceptor() }
+    single { provideRetrofit(get(), get()) }
+
+    single { ProvideAuthenticator(get(), get(), get()) }
+    single { ProvideAccessTokenInterceptor(get()) }
+    single { ProvideRefreshTokenInterceptor(get()) }
+    single { provideAccessTokenOkHttpClient(get()) }
+    single { provideAuthenticatorOkHttpClient(get(), get(), get()) }
+    single { provideRefreshTokenOkHttpClient(get()) }
+
+    single { ConverterToken() }
+    single { get<Retrofit>().create(AccountAPI::class.java) }
+
+    singleOf(::LocalStorage)
     single {
-        HttpClient {
-            install(plugin = ContentNegotiation) {
-                json(json = Json { ignoreUnknownKeys = true })
-            }
-            install(plugin = Logging) {
-                logger = Logger.SIMPLE
-                level = LogLevel.ALL
-            }
-            install(plugin = DefaultRequest) {
-                url {
-                    protocol = io.ktor.http.URLProtocol.HTTP
-                    host = "ec2-54-91-254-47.compute-1.amazonaws.com"
-                    port = 8003
-                }
-                contentType(type = ContentType.Application.Json)
-            }
+        PreferenceDataStoreFactory.create {
+            androidContext().preferencesDataStoreFile(name = LOCAL_STORAGE)
         }
     }
 }

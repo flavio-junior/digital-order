@@ -28,7 +28,15 @@ fun BottomNavigationOrder(
             SettingsScreen(
                 goToLoginScreen = {
                     navGraph.navigate(route = RouteApp.SignIn.item)
-                }
+                },
+                goToSplashScreen = {
+                    navGraph.navigate(route = RouteApp.SplashScreen.item) {
+                        popUpTo(RouteApp.Dashboard.item) {
+                            inclusive = true
+                        }
+                    }
+                },
+                goToAlternativeRoutes = {}
             )
         }
     }

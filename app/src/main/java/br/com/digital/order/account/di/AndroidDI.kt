@@ -1,25 +1,19 @@
 package br.com.digital.order.account.di
 
-import androidx.datastore.preferences.core.PreferenceDataStoreFactory
-import androidx.datastore.preferences.preferencesDataStoreFile
-import br.com.digital.order.account.data.repository.AccountRepository
-import br.com.digital.order.account.data.repository.local.LocalStorage
+import br.com.digital.order.account.data.repository.remote.AccountAPI
 import br.com.digital.order.account.data.repository.remote.AccountRemoteDataSource
-import br.com.digital.order.utils.OrdersUtils.LOCAL_STORAGE
-import br.com.digital.order.account.domain.converter.ConverterToken
+import br.com.digital.order.account.data.repository.remote.AccountRemoteImpDataSource
 import br.com.digital.order.account.ui.viewmodel.AccountViewModel
+import br.com.digital.order.dashboard.ui.viewmodel.DashboardViewModel
 import org.koin.android.ext.koin.androidContext
-import org.koin.core.module.dsl.singleOf
+import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
+import retrofit2.Retrofit
 
 val androidModule = module {
-    singleOf(::LocalStorage)
-    single {
-        PreferenceDataStoreFactory.create {
-            androidContext().preferencesDataStoreFile(name = LOCAL_STORAGE)
-        }
-    }
-    single<AccountRepository> { AccountRemoteDataSource(get()) }
-    single { ConverterToken() }
-    single { AccountViewModel(get(), get(), get()) }
+    factory { AccountRemoteDataSource(androidContext(), get()) }
+    factory { AccountRemoteImpDataSource(get()) }
+    single { get<Retrofit>().create(AccountAPI::class.java) }
+    viewModel { AccountViewModel(get(), get(), get()) }
+    viewModel { DashboardViewModel(get()) }
 }
