@@ -11,4 +11,8 @@
     <string name="delivery">Delivery</string>
     <string name="name">Nome</string>
     <string name="quantity">Quantidade</string>
+    <string name="street">Rua</string>
+    <string name="number">Número</string>
+    <string name="district">Bairro</string>
+    <string name="complement">Complemento</string>
 </resources>

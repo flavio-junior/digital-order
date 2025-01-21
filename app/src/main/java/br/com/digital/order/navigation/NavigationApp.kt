@@ -76,9 +76,18 @@ private fun NavGraphBuilder.dashboardNavigation(
         DashboardScreen(navGraph = navController)
     }
     composable(RouteApp.Delivery.item) {
-        DeliveryScreen {
-            navController.popBackStack()
-        }
+        DeliveryScreen(
+            goToBack = {
+                navController.popBackStack()
+            },
+            goToAlternativeRoutes = {
+                navigateToAlternativeRoutes(
+                    navController = navController,
+                    currentScreen = RouteApp.Delivery.item,
+                    alternativeRoutes = it
+                )
+            }
+        )
     }
     composable(RouteApp.Order.item) {
         OrderScreen(

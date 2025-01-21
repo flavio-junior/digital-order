@@ -43,7 +43,6 @@ fun OrderScreen(
     goToAlternativeRoutes: (AlternativesRoutes?) -> Unit = {}
 ) {
     val viewModel: DashboardViewModel = koinViewModel()
-
     val objectsToSave = remember { mutableStateListOf<ObjectRequestDTO>() }
     val contentObjects = remember { mutableStateListOf<BodyObject>() }
     var verifyObjects: Boolean by remember { mutableStateOf(value = false) }
