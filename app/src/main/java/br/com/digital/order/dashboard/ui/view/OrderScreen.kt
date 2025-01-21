@@ -36,6 +36,7 @@ import br.com.digital.order.ui.components.OptionButton
 import br.com.digital.order.ui.theme.Themes
 import br.com.digital.order.utils.NumbersUtils.NUMBER_ZERO
 import br.com.digital.order.utils.OrdersUtils.EMPTY_TEXT
+import br.com.digital.order.utils.OrdersUtils.NUMBER_EQUALS_ZERO
 import br.com.digital.order.utils.StringsUtils.ADD_FOOD
 import br.com.digital.order.utils.StringsUtils.ADD_ITEM
 import br.com.digital.order.utils.StringsUtils.ADD_PRODUCT
@@ -130,16 +131,20 @@ fun OrderScreen(
                 onClick = {
                     if (objectsToSave.isEmpty()) {
                         observer = Triple(first = false, second = true, third = NOT_BLANK_OR_EMPTY)
-                    } else if (objectsToSave.all { it.quantity == 0 }) {
-                        verifyObjects = true
                     } else {
-                        observer = Triple(first = true, second = false, third = EMPTY_TEXT)
-                        viewModel.createOrder(
-                            order = OrderRequestDTO(
-                                type = TypeOrder.ORDER,
-                                objects = objectsToSave.toList()
+                        verifyObjects = objectsToSave.any { it.quantity == 0 }
+                        if (verifyObjects) {
+                            observer =
+                                Triple(first = false, second = true, third = NUMBER_EQUALS_ZERO)
+                        } else {
+                            observer = Triple(first = true, second = false, third = EMPTY_TEXT)
+                            viewModel.createOrder(
+                                order = OrderRequestDTO(
+                                    type = TypeOrder.ORDER,
+                                    objects = objectsToSave.toList()
+                                )
                             )
-                        )
+                        }
                     }
                 },
                 isEnabled = observer.first
