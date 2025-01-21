@@ -19,7 +19,7 @@ fun ReservationScreen(
             .fillMaxSize()
     ) {
         ActionButton(
-            title = R.string.reservations,
+            title = R.string.reservation,
             goToBack = goToBack
         )
     }

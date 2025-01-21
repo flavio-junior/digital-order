@@ -1,7 +1,7 @@
 package br.com.digital.order.account.di
 
 import br.com.digital.order.account.data.repository.remote.AccountRemoteDataSourceAPI
-import br.com.digital.order.account.data.repository.remote.AccountRepository
+import br.com.digital.order.account.data.repository.AccountRepository
 import br.com.digital.order.account.data.repository.remote.AccountRemoteImpDataSource
 import br.com.digital.order.account.ui.viewmodel.AccountViewModel
 import org.koin.android.ext.koin.androidContext

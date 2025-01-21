@@ -75,6 +75,7 @@ object StringsUtils {
     const val DISTRICT = "Bairro"
     const val COMPLEMENT = "Complemento"
     const val ADD_PRODUCT = "Adicionar Produto"
+    const val ADD_PRODUCTS = "Adicionar produtos"
     const val ADD_RESERVATION = "Adicionar Reserva"
     const val NAME_PRODUCT = "Nome do Produto"
     const val ADD_FOOD = "Adicionar Prato"

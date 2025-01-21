@@ -12,7 +12,7 @@ import br.com.digital.order.account.domain.converter.ConverterToken
 import br.com.digital.order.networking.resources.ObserveNetworkStateHandler
 import br.com.digital.order.utils.OrdersUtils.INVALID_EMAIL
 import br.com.digital.order.utils.validateEmail
-import br.com.digital.order.account.data.repository.remote.AccountRepository
+import br.com.digital.order.account.data.repository.AccountRepository
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 

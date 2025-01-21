@@ -2,6 +2,8 @@ package br.com.digital.order
 
 import android.app.Application
 import br.com.digital.order.account.di.androidModule
+import br.com.digital.order.category.di.categoryModule
+import br.com.digital.order.common.di.commonModule
 import br.com.digital.order.dashboard.di.dashboardModule
 import br.com.digital.order.food.di.foodModule
 import br.com.digital.order.item.di.itemModule
@@ -22,6 +24,8 @@ class ApplicationApp : Application() {
             modules(
                 listOf(
                     androidModule,
+                    categoryModule,
+                    commonModule,
                     dashboardModule,
                     foodModule,
                     itemModule,
