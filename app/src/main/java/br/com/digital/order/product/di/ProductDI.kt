@@ -3,7 +3,7 @@ package br.com.digital.order.product.di
 import br.com.digital.order.product.data.repository.ProductRemoteDataSourceAPI
 import br.com.digital.order.product.data.repository.ProductRemoteImplDataSource
 import br.com.digital.order.product.data.repository.ProductRepository
-import br.com.digital.order.product.domain.ConverterProduct
+import br.com.digital.order.product.domain.converter.ConverterProduct
 import br.com.digital.order.product.ui.viewmodel.ProductViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel

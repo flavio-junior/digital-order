@@ -1,7 +1,7 @@
 package br.com.digital.order
 
 import android.app.Application
-import br.com.digital.order.account.di.androidModule
+import br.com.digital.order.account.di.accountModule
 import br.com.digital.order.category.di.categoryModule
 import br.com.digital.order.common.di.commonModule
 import br.com.digital.order.dashboard.di.dashboardModule
@@ -23,7 +23,7 @@ class ApplicationApp : Application() {
             androidLogger(Level.INFO)
             modules(
                 listOf(
-                    androidModule,
+                    accountModule,
                     categoryModule,
                     commonModule,
                     dashboardModule,

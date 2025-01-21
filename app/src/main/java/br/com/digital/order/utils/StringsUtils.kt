@@ -10,6 +10,7 @@ object StringsUtils {
     const val PRICE = "Preço"
     const val TOTAL = "Total"
     const val QUANTITY = "Quantidade"
+    const val REMOVE_ITEM = "Remover Item?"
     const val DATE = "Data"
     const val HOUR = "Hora"
     const val TYPE_PAYMENT = "Tipo do Pagamento"

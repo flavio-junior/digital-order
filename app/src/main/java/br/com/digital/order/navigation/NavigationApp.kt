@@ -58,7 +58,13 @@ private fun NavGraphBuilder.signInNavigation(
                 }
             },
             goToSendRecoverTokenScreen = {},
-            //goToAlternativeRoutes = {}
+            goToAlternativeRoutes = {
+                navigateToAlternativeRoutes(
+                    navController = navController,
+                    currentScreen = RouteApp.SignIn.item,
+                    alternativeRoutes = it
+                )
+            }
         )
     }
 }
@@ -70,12 +76,27 @@ private fun NavGraphBuilder.dashboardNavigation(
         DashboardScreen(navGraph = navController)
     }
     composable(RouteApp.Delivery.item) {
-        DeliveryScreen { navController.popBackStack() }
+        DeliveryScreen {
+            navController.popBackStack()
+        }
     }
     composable(RouteApp.Order.item) {
-        OrderScreen { navController.popBackStack() }
+        OrderScreen(
+            goToBack = {
+                navController.popBackStack()
+            },
+            goToAlternativeRoutes = {
+                navigateToAlternativeRoutes(
+                    navController = navController,
+                    currentScreen = RouteApp.Order.item,
+                    alternativeRoutes = it
+                )
+            }
+        )
     }
     composable(RouteApp.Reservation.item) {
-        ReservationScreen { navController.popBackStack() }
+        ReservationScreen {
+            navController.popBackStack()
+        }
     }
 }

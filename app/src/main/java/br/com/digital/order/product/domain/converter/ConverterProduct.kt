@@ -1,4 +1,4 @@
-package br.com.digital.order.product.domain
+package br.com.digital.order.product.domain.converter
 
 import br.com.digital.order.category.domain.ConverterCategory
 import br.com.digital.order.product.data.dto.ProductResponseDTO

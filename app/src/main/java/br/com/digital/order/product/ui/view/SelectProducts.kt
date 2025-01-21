@@ -101,6 +101,7 @@ fun SelectProducts(
                     if (productsSelected.isNotEmpty()) {
                         viewModel.resetProduct()
                         onResult(productsSelected)
+                        onDismiss()
                     } else {
                         observer =
                             Triple(first = false, second = true, third = NO_PRODUCTS_SELECTED)

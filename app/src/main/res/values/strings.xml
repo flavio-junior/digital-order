@@ -9,4 +9,6 @@
     <string name="reservation">Reserva</string>
     <string name="reservations">Reservas</string>
     <string name="delivery">Delivery</string>
+    <string name="name">Nome</string>
+    <string name="quantity">Quantidade</string>
 </resources>

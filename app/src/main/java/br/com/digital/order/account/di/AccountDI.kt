@@ -9,7 +9,7 @@ import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 
-val androidModule = module {
+val accountModule = module {
     factory { AccountRepository(androidContext(), get()) }
     factory { AccountRemoteImpDataSource(get()) }
     single { get<Retrofit>().create(AccountRemoteDataSourceAPI::class.java) }
