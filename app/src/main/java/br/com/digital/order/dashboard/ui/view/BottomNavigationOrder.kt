@@ -6,9 +6,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import br.com.digital.order.navigation.RouteApp
+import br.com.digital.order.navigation.navigateBetweenMainRoutes
 
 @Composable
 fun BottomNavigationOrder(
+    actualStep: Int = 0,
     modifier: Modifier,
     navController: NavHostController,
     navGraph: NavHostController
@@ -23,8 +25,9 @@ fun BottomNavigationOrder(
         }
         composable(BottomNavigationRoute.PendingOrders.route.name) {
             PendingOrdersScreen(
+                actualStep = actualStep,
                 goToNextScreen = {
-                    navGraph.navigate(route = it)
+                    navigateBetweenMainRoutes(navGraph = navGraph, route = it)
                 },
                 goToAlternativeRoutes = {}
             )

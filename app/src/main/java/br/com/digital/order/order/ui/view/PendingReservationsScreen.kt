@@ -8,15 +8,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import br.com.digital.order.networking.resources.AlternativesRoutes
 import br.com.digital.order.order.data.vo.OrderResponseVO
 import br.com.digital.order.ui.theme.Themes
 
 @Composable
 fun PendingReservationsScreen(
     ordersResponseVO: List<OrderResponseVO>,
-    onItemSelected: (OrderResponseVO) -> Unit = {},
-    goToAlternativeRoutes: (AlternativesRoutes?) -> Unit = {}
+    goToNextScreen: (Pair<String, Long?>) -> Unit = {}
 ) {
     Column(
         modifier = Modifier
@@ -26,7 +24,10 @@ fun PendingReservationsScreen(
         verticalArrangement = Arrangement.spacedBy(space = Themes.size.spaceSize16)
     ) {
         ordersResponseVO.forEach { orderResponseVO ->
-            CardReservation(orderResponseVO = orderResponseVO)
+            CardReservation(
+                orderResponseVO = orderResponseVO,
+                goToNextScreen = goToNextScreen
+            )
         }
     }
 }

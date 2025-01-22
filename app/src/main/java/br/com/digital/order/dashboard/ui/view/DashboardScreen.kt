@@ -12,6 +12,7 @@ import br.com.digital.order.ui.theme.Themes
 
 @Composable
 fun DashboardScreen(
+    actualStep: Int = 0,
     navController: NavHostController = rememberNavController(),
     navGraph: NavHostController
 ) {
@@ -27,6 +28,7 @@ fun DashboardScreen(
         }
     ) { innerPadding ->
         BottomNavigationOrder(
+            actualStep = actualStep,
             modifier = Modifier.padding(innerPadding),
             navController = navController,
             navGraph = navGraph

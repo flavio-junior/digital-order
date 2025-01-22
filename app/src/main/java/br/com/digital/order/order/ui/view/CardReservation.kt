@@ -8,13 +8,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import br.com.digital.order.navigation.RouteApp
 import br.com.digital.order.order.data.vo.OrderResponseVO
 import br.com.digital.order.order.utils.OrderUtils.NUMBER_ITEMS
 import br.com.digital.order.order.utils.OrderUtils.NUMBER_RESERVATIONS
 import br.com.digital.order.order.utils.countPendingObjects
 import br.com.digital.order.ui.components.SimpleText
 import br.com.digital.order.ui.theme.Themes
-import br.com.digital.order.utils.NumbersUtils.NUMBER_ONE
 import br.com.digital.order.utils.StringsUtils.PENDING_OBJECTS
 import br.com.digital.order.utils.StringsUtils.VALUE_TOTAL
 import br.com.digital.order.utils.formatterMaskToMoney
@@ -23,13 +23,20 @@ import br.com.digital.order.utils.onBorder
 @Composable
 fun CardReservation(
     orderResponseVO: OrderResponseVO,
-    onItemSelected: (Pair<OrderResponseVO, Int>) -> Unit = {}
+    goToNextScreen: (Pair<String, Long?>) -> Unit = {}
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(space = Themes.size.spaceSize4),
         modifier = Modifier
             .onBorder(
-                onClick = { onItemSelected(Pair(first = orderResponseVO, second = NUMBER_ONE)) },
+                onClick = {
+                    goToNextScreen(
+                        Pair(
+                            first = RouteApp.DetailsReservation.item,
+                            second = null
+                        )
+                    )
+                },
                 color = Themes.colors.primary,
                 spaceSize = Themes.size.spaceSize12,
                 width = Themes.size.spaceSize2

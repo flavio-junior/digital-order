@@ -15,6 +15,10 @@ fun goToNextScreen(
     }
 }
 
+object NavigationUtils {
+    const val TAB_ITEM_ARG = "TAB_ITEM_ARG"
+}
+
 fun navigateToAlternativeRoutes(
     navController: NavHostController,
     currentScreen: String,

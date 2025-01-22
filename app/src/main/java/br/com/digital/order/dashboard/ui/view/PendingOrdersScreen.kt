@@ -20,7 +20,8 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun PendingOrdersScreen(
-    goToNextScreen: (String) -> Unit = {},
+    actualStep: Int,
+    goToNextScreen: (Pair<String, Long?>) -> Unit = {},
     goToAlternativeRoutes: (AlternativesRoutes?) -> Unit = {}
 ) {
     val viewModel: OrderViewModel = koinViewModel()
@@ -33,6 +34,7 @@ fun PendingOrdersScreen(
             .fillMaxSize()
     ) {
         ObserveNetworkStateHandlerPendingOrders(
+            actualStep = actualStep,
             viewModel = viewModel,
             goToNextScreen = goToNextScreen,
             goToAlternativeRoutes = goToAlternativeRoutes,
@@ -42,9 +44,10 @@ fun PendingOrdersScreen(
 
 @Composable
 private fun ObserveNetworkStateHandlerPendingOrders(
+    actualStep: Int,
     viewModel: OrderViewModel,
-    goToNextScreen: (String) -> Unit = {},
-    goToAlternativeRoutes: (AlternativesRoutes?) -> Unit = {},
+    goToNextScreen: (Pair<String, Long?>) -> Unit = {},
+    goToAlternativeRoutes: (AlternativesRoutes?) -> Unit = {}
 ) {
     val state: ObserveNetworkStateHandler<OrdersResponseVO> by remember { viewModel.findAllOpenOrders }
     ObserveNetworkStateHandler(
@@ -59,9 +62,9 @@ private fun ObserveNetworkStateHandlerPendingOrders(
         onSuccess = {
             it.result?.let { ordersResult ->
                 OrdersTabs(
+                    actualStep = actualStep,
                     ordersResponseVO = ordersResult,
-                    goToNextScreen = goToNextScreen,
-                    goToAlternativeRoutes = goToAlternativeRoutes
+                    goToNextScreen = goToNextScreen
                 )
             }
         }

@@ -1,15 +1,21 @@
 package br.com.digital.order.order.ui.view
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import br.com.digital.order.dashboard.domain.type.TypeOrder
 import br.com.digital.order.order.data.vo.OrderResponseVO
 import br.com.digital.order.utils.NumbersUtils
 
 @Composable
 fun OrderTabMain(
-    index: Int,
+    actualStep: Int,
+    goToNextScreen: (Pair<String, Long?>) -> Unit = {},
     ordersResponseVO: List<OrderResponseVO>
 ) {
+    val tabIndex by remember { mutableIntStateOf(value = actualStep) }
     val delivery = mutableListOf<OrderResponseVO>()
     val order = mutableListOf<OrderResponseVO>()
     val reservation = mutableListOf<OrderResponseVO>()
@@ -30,11 +36,20 @@ fun OrderTabMain(
             else -> {}
         }
     }
-    when (index) {
-        NumbersUtils.NUMBER_ZERO -> PendingDeliveryScreen(ordersResponseVO = delivery)
+    when (tabIndex) {
+        NumbersUtils.NUMBER_ZERO -> PendingDeliveryScreen(
+            ordersResponseVO = delivery,
+            goToNextScreen = goToNextScreen
+        )
 
-        NumbersUtils.NUMBER_ONE -> PendingPickupScreen(ordersResponseVO= ordersResponseVO)
+        NumbersUtils.NUMBER_ONE -> PendingPickupScreen(
+            ordersResponseVO = ordersResponseVO,
+            goToNextScreen = goToNextScreen
+        )
 
-        NumbersUtils.NUMBER_TWO -> PendingReservationsScreen(ordersResponseVO = reservation)
+        NumbersUtils.NUMBER_TWO -> PendingReservationsScreen(
+            ordersResponseVO = reservation,
+            goToNextScreen = {  }
+        )
     }
 }

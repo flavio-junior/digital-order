@@ -6,6 +6,9 @@ enum class ItemNavigation {
     DASHBOARD,
     DELIVERY,
     ORDER,
+    DETAILS_DELIVERY,
+    DETAILS_ORDER,
+    DETAILS_RESERVATION,
     RESERVATION,
     SETTINGS
 }

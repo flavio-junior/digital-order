@@ -17,7 +17,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import br.com.digital.order.networking.resources.AlternativesRoutes
 import br.com.digital.order.order.data.vo.OrdersResponseVO
 import br.com.digital.order.ui.components.Description
 import br.com.digital.order.ui.theme.Themes
@@ -27,9 +26,9 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OrdersTabs(
-    ordersResponseVO: OrdersResponseVO,
-    goToNextScreen: (String) -> Unit = {},
-    goToAlternativeRoutes: (AlternativesRoutes?) -> Unit = {}
+    actualStep: Int,
+    goToNextScreen: (Pair<String, Long?>) -> Unit = {},
+    ordersResponseVO: OrdersResponseVO
 ) {
     val scope = rememberCoroutineScope()
     val pagerState = rememberPagerState(pageCount = { ItemsOrder.entries.size })
@@ -69,7 +68,8 @@ fun OrdersTabs(
                 contentAlignment = Alignment.TopCenter
             ) {
                 OrderTabMain(
-                    index = it,
+                    actualStep = actualStep,
+                    goToNextScreen = goToNextScreen,
                     ordersResponseVO = ordersResponseVO.content ?: emptyList(),
                 )
             }
