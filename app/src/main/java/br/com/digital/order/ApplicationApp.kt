@@ -8,6 +8,7 @@ import br.com.digital.order.dashboard.di.dashboardModule
 import br.com.digital.order.food.di.foodModule
 import br.com.digital.order.item.di.itemModule
 import br.com.digital.order.networking.di.networkModule
+import br.com.digital.order.order.di.orderModule
 import br.com.digital.order.product.di.productModule
 import br.com.digital.order.reservation.di.reservationModule
 import org.koin.android.ext.koin.androidContext
@@ -26,6 +27,7 @@ class ApplicationApp : Application() {
                     accountModule,
                     categoryModule,
                     commonModule,
+                    orderModule,
                     dashboardModule,
                     foodModule,
                     itemModule,

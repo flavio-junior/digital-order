@@ -22,7 +22,12 @@ fun BottomNavigationOrder(
             PdvScreen(navGraph = navGraph)
         }
         composable(BottomNavigationRoute.PendingOrders.route.name) {
-            PendingOrdersScreen()
+            PendingOrdersScreen(
+                goToNextScreen = {
+                    navGraph.navigate(route = it)
+                },
+                goToAlternativeRoutes = {}
+            )
         }
         composable(BottomNavigationRoute.Settings.route.name) {
             SettingsScreen(
