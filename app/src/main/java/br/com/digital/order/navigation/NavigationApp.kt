@@ -145,9 +145,12 @@ private fun NavGraphBuilder.dashboardNavigation(
             objectResponseVO = { objectSelected ->
                 val objectBundle = Bundle()
                 objectBundle.putParcelable(OBJECT_ARG, objectSelected.first)
-                navController.navigateArgs(
-                    route = "${RouteApp.ObjectDetail.item}?$ORDER_ID_ARG=${objectSelected.second}",
-                    args = objectBundle
+                objectBundle.putLong(ORDER_ID_ARG, objectSelected.second)
+                navController.navigateWithArgsAndBundle(
+                    route = RouteApp.ObjectDetail.item,
+                    args = objectBundle,
+                    argumentKey = ORDER_ID_ARG,
+                    argumentValue = objectSelected.second
                 )
             },
             goToNextScreen = {
@@ -203,18 +206,16 @@ private fun NavGraphBuilder.dashboardNavigation(
         )
     }
 
-    composable(
-        route = "${RouteApp.ObjectDetail.item}?$ORDER_ID_ARG={$ORDER_ID_ARG}",
-        arguments = listOf(navArgument(ORDER_ID_ARG) { type = NavType.LongType })
-    ) { parameter ->
+    composable(route = RouteApp.ObjectDetail.item) { parameter ->
         val bundle = parameter.arguments
         val objectResponseVO = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             bundle?.getParcelable(OBJECT_ARG, ObjectResponseVO::class.java)
         } else {
             bundle?.getParcelable(OBJECT_ARG) as ObjectResponseVO?
         }
+        val orderId = bundle?.getLong(ORDER_ID_ARG)
         DetailsObjectScreen(
-            orderId = parameter.arguments?.getLong(ORDER_ID_ARG),
+            orderId = orderId,
             objectResponseVO = objectResponseVO,
             goToBack = {
                 navController.popBackStack()
