@@ -8,18 +8,16 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import br.com.digital.order.navigation.RouteApp
 import br.com.digital.order.networking.resources.AlternativesRoutes
 import br.com.digital.order.order.data.vo.OrderResponseVO
 import br.com.digital.order.ui.theme.Themes
-import br.com.digital.order.utils.onClickable
 
 @Composable
 fun PendingDeliveryScreen(
     ordersResponseVO: List<OrderResponseVO>,
     onItemSelected: (OrderResponseVO) -> Unit = {},
     goToAlternativeRoutes: (AlternativesRoutes?) -> Unit = {},
-    onClickable: (String) -> Unit = {}
+    onClickable: (OrderResponseVO) -> Unit = {}
 ) {
     Column(
         modifier = Modifier

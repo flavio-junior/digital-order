@@ -1,4 +1,4 @@
-package br.com.digital.order.order.domain
+package br.com.digital.order.order.domain.converter
 
 import br.com.digital.order.common.domain.converterPageableDTOToVO
 import br.com.digital.order.order.data.dto.AddressResponseDTO

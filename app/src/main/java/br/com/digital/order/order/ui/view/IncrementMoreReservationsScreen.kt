@@ -1,4 +1,4 @@
-package br.com.digital.order.dashboard.ui.view
+package br.com.digital.order.order.ui.view
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
@@ -17,12 +17,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import br.com.digital.order.R
-import br.com.digital.order.common.dto.ObjectRequestDTO
-import br.com.digital.order.dashboard.data.dto.OrderRequestDTO
-import br.com.digital.order.dashboard.domain.type.TypeOrder
-import br.com.digital.order.dashboard.ui.viewmodel.DashboardViewModel
+import br.com.digital.order.navigation.RouteApp
 import br.com.digital.order.networking.resources.AlternativesRoutes
 import br.com.digital.order.networking.resources.ObserveNetworkStateHandler
+import br.com.digital.order.order.ui.viewmodel.OrderViewModel
+import br.com.digital.order.order.ui.viewmodel.ResetOrder
 import br.com.digital.order.reservation.data.dto.ReservationResponseDTO
 import br.com.digital.order.reservation.ui.view.ReservationSelected
 import br.com.digital.order.reservation.ui.view.SelectReservations
@@ -35,25 +34,20 @@ import br.com.digital.order.ui.components.ObserveNetworkStateHandler
 import br.com.digital.order.ui.components.OptionButton
 import br.com.digital.order.ui.theme.Themes
 import br.com.digital.order.utils.OrdersUtils.EMPTY_TEXT
-import br.com.digital.order.utils.OrdersUtils.NUMBER_EQUALS_ZERO
 import br.com.digital.order.utils.StringsUtils.ADD_RESERVATIONS
-import br.com.digital.order.utils.StringsUtils.CREATE_NEW_ORDER
-import br.com.digital.order.utils.StringsUtils.NOT_BLANK_OR_EMPTY
-import br.com.digital.order.utils.StringsUtils.RESERVATIONS
+import br.com.digital.order.utils.StringsUtils.SAVE_RESERVATIONS
 import br.com.digital.order.utils.StringsUtils.SELECTED_RESERVATIONS
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun ReservationScreen(
-    goToBack: () -> Unit = { },
-    goToAlternativeRoutes: (AlternativesRoutes?) -> Unit = {}
+fun IncrementMoreReservationsScreen(
+    orderId: Long? = null,
+    goToBack: () -> Unit = {},
+    goToNextScreen: (String) -> Unit = {}
 ) {
-    val viewModel: DashboardViewModel = koinViewModel()
-    val objectsToSave = remember { mutableStateListOf<ObjectRequestDTO>() }
+    val viewModel: OrderViewModel = koinViewModel()
     val reservationsToSave = remember { mutableStateListOf<ReservationResponseDTO>() }
     var addNewReservation: Boolean by remember { mutableStateOf(value = false) }
-    val contentObjects = remember { mutableStateListOf<BodyObject>() }
-    var verifyObjects: Boolean by remember { mutableStateOf(value = false) }
     var observer: Triple<Boolean, Boolean, String> by remember {
         mutableStateOf(value = Triple(first = false, second = false, third = EMPTY_TEXT))
     }
@@ -63,7 +57,7 @@ fun ReservationScreen(
             .fillMaxSize()
     ) {
         ActionButton(
-            title = R.string.reservation,
+            title = R.string.add_more_reservations,
             goToBack = goToBack
         )
         Column(
@@ -74,13 +68,6 @@ fun ReservationScreen(
                 .verticalScroll(state = rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(space = Themes.size.spaceSize16)
         ) {
-            BodyRequestsOrder(
-                objectsToSave = objectsToSave,
-                contentObjects = contentObjects,
-                verifyObjects = verifyObjects,
-                goToAlternativeRoutes = goToAlternativeRoutes
-            )
-            Description(description = "$RESERVATIONS:")
             OptionButton(
                 icon = R.drawable.reservation,
                 label = ADD_RESERVATIONS,
@@ -105,81 +92,70 @@ fun ReservationScreen(
                 }
             }
             LoadingButton(
-                label = CREATE_NEW_ORDER,
+                label = SAVE_RESERVATIONS,
                 onClick = {
-                    if (objectsToSave.isEmpty()) {
-                        observer = Triple(first = false, second = true, third = NOT_BLANK_OR_EMPTY)
-                    } else if (reservationsToSave.isEmpty()) {
+                    if (reservationsToSave.isNotEmpty()) {
+                        observer =
+                            Triple(first = true, second = false, third = EMPTY_TEXT)
+                        viewModel.incrementMoreReservationsOrder(
+                            orderId = orderId ?: 0,
+                            reservationsToSava = reservationsToSave.toList()
+                        )
+                    } else {
                         observer =
                             Triple(first = false, second = true, third = LIST_RESERVATIONS_EMPTY)
-                    } else {
-                        verifyObjects = objectsToSave.any { it.quantity == 0 }
-                        if (verifyObjects) {
-                            observer =
-                                Triple(first = false, second = true, third = NUMBER_EQUALS_ZERO)
-                        } else {
-                            observer = Triple(first = true, second = false, third = EMPTY_TEXT)
-                            viewModel.createOrder(
-                                order = OrderRequestDTO(
-                                    type = TypeOrder.RESERVATION,
-                                    reservations = reservationsToSave,
-                                    objects = objectsToSave.toList()
-                                )
-                            )
-                        }
                     }
                 },
                 isEnabled = observer.first
             )
             IsErrorMessage(isError = observer.second, message = observer.third)
+            if (addNewReservation) {
+                SelectReservations(
+                    onDismiss = {
+                        addNewReservation = false
+                    },
+                    onResult = {
+                        it.forEach { reservation ->
+                            if (!reservationsToSave.contains(element = reservation)) {
+                                reservationsToSave.add(reservation)
+                            }
+                        }
+                        addNewReservation = false
+                    }
+                )
+            }
         }
     }
-    if (addNewReservation) {
-        SelectReservations(
-            onDismiss = {
-                addNewReservation = false
-            },
-            onResult = {
-                it.forEach { reservation ->
-                    if (!reservationsToSave.contains(element = reservation)) {
-                        reservationsToSave.add(reservation)
-                    }
-                }
-                addNewReservation = false
-            }
-        )
-    }
-    ObserveNetworkStateHandlerCreateNewReservationOrder(
+    ObserveStateIncrementMoreReservationsOrder(
         viewModel = viewModel,
         onError = {
             observer = it
         },
-        goToAlternativeRoutes = goToAlternativeRoutes,
-        onSuccessful = goToBack
+        onSuccess = {
+            goToNextScreen(RouteApp.Dashboard.item)
+        }
     )
 }
 
 @Composable
-private fun ObserveNetworkStateHandlerCreateNewReservationOrder(
-    viewModel: DashboardViewModel,
-    goToAlternativeRoutes: (AlternativesRoutes?) -> Unit = {},
+private fun ObserveStateIncrementMoreReservationsOrder(
+    viewModel: OrderViewModel,
     onError: (Triple<Boolean, Boolean, String>) -> Unit = {},
-    onSuccessful: () -> Unit = {}
+    onSuccess: () -> Unit = {},
+    goToAlternativeRoutes: (AlternativesRoutes?) -> Unit = {},
 ) {
-    val state: ObserveNetworkStateHandler<Unit> by remember { viewModel.createOrder }
+    val state: ObserveNetworkStateHandler<Unit> by remember { viewModel.incrementMoreReservationsOrder }
     ObserveNetworkStateHandler(
         state = state,
-        onLoading = {},
         onError = {
-            onError(Triple(first = false, second = true, third = it.orEmpty()))
+            onError(Triple(first = true, second = false, third = it ?: EMPTY_TEXT))
         },
-        goToAlternativeRoutes = {
-            goToAlternativeRoutes(it)
-        },
+        goToAlternativeRoutes = goToAlternativeRoutes,
         onSuccess = {
             onError(Triple(first = false, second = false, third = EMPTY_TEXT))
-            viewModel.resetOrder()
-            onSuccessful()
+            viewModel.resetOrder(reset = ResetOrder.INCREMENT_MORE_RESERVATIONS_ORDER)
+            onSuccess()
         }
     )
 }
+

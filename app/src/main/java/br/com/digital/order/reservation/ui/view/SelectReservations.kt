@@ -154,7 +154,7 @@ private fun SelectReservations(
     ) {
         items(reservations) { reservation ->
             Tag(
-                text = reservation.name,
+                text = reservation.name ?: EMPTY_TEXT,
                 value = reservation,
                 onCheck = { isChecked ->
                     if (isChecked) {
@@ -189,7 +189,7 @@ private fun ListReservationsAvailable(
             )
     ) {
         items(reservations) { Reservations ->
-            Description(description = Reservations.name)
+            Description(description = Reservations.name ?: EMPTY_TEXT)
         }
     }
 }

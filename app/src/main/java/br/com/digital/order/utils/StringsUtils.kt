@@ -50,6 +50,7 @@ object StringsUtils {
     const val PICKUP_ORDERS = "Pedidos Para Retirada"
     const val RESERVATION = "Reserva"
     const val RESERVATIONS = "Reservas"
+    const val SAVE_RESERVATIONS = "Salvar reservas"
     const val SELECTED_RESERVATIONS = "Reservas Selecionadas:"
     const val REMOVER_RESERVATION = "Remover Reserva?"
     const val REPORTS = "Relatórios"

@@ -21,15 +21,16 @@ import br.com.digital.order.ui.components.SelectObject
 import br.com.digital.order.ui.components.SimpleText
 import br.com.digital.order.ui.components.Title
 import br.com.digital.order.ui.theme.Themes
+import br.com.digital.order.utils.OrdersUtils.EMPTY_TEXT
 import br.com.digital.order.utils.StringsUtils
 import br.com.digital.order.utils.StringsUtils.CANCEL
 import br.com.digital.order.utils.StringsUtils.CONFIRM
 import br.com.digital.order.utils.onBorder
 
 @Composable
-fun CardReservation(
+fun ReservationSelected(
     reservation: ReservationResponseDTO,
-    onItemSelected: (ReservationResponseDTO) -> Unit = {},
+    onItemSelected: (ReservationResponseDTO) -> Unit = {}
 ) {
     var openDialog by remember { mutableStateOf(value = false) }
     Column(
@@ -50,7 +51,7 @@ fun CardReservation(
         verticalArrangement = Arrangement.Center
     ) {
         SimpleText(
-            text = reservation.name,
+            text = reservation.name ?: EMPTY_TEXT,
             color = Themes.colors.primary
         )
         if (openDialog) {

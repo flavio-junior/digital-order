@@ -15,4 +15,13 @@
     <string name="number">Número</string>
     <string name="district">Bairro</string>
     <string name="complement">Complemento</string>
+    <string name="details_order">Detalhes do Pedido</string>
+    <string name="type_order">Tipo do Pedido</string>
+    <string name="status_order">Status do Pedido</string>
+    <string name="pending_delivery">Entrega Pendente</string>
+    <string name="order">Retirada</string>
+    <string name="pending_reservations">Reservas Pendentes</string>
+    <string name="add_more_reservations">Adicionar mais reservas</string>
+    <string name="add_more_items">Adicionar mais itens</string>
+    <string name="cancel_order">Cancelar Pedido</string>
 </resources>

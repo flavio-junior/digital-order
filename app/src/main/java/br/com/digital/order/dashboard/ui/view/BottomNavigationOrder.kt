@@ -1,11 +1,14 @@
 package br.com.digital.order.dashboard.ui.view
 
+import android.os.Bundle
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import br.com.digital.order.navigation.DETAILS_ORDER
 import br.com.digital.order.navigation.RouteApp
+import br.com.digital.order.navigation.navigateArgs
 
 @Composable
 fun BottomNavigationOrder(
@@ -21,14 +24,18 @@ fun BottomNavigationOrder(
         composable(BottomNavigationRoute.PDV.route.name) {
             PdvScreen(navGraph = navGraph)
         }
+
         composable(BottomNavigationRoute.PendingOrders.route.name) {
             PendingOrdersScreen(
                 goToNextScreen = {
-                    navGraph.navigate(route = it)
+                    val bundle = Bundle()
+                    bundle.putParcelable(DETAILS_ORDER, it.second)
+                    navGraph.navigateArgs(route = it.first, args = bundle)
                 },
                 goToAlternativeRoutes = {}
             )
         }
+
         composable(BottomNavigationRoute.Settings.route.name) {
             SettingsScreen(
                 goToLoginScreen = {
