@@ -71,6 +71,7 @@ fun OrdersTabs(
                 OrderTabMain(
                     index = it,
                     ordersResponseVO = ordersResponseVO.content ?: emptyList(),
+                    onClickable = goToNextScreen
                 )
             }
         }

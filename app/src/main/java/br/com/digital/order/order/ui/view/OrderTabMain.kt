@@ -8,7 +8,8 @@ import br.com.digital.order.utils.NumbersUtils
 @Composable
 fun OrderTabMain(
     index: Int,
-    ordersResponseVO: List<OrderResponseVO>
+    ordersResponseVO: List<OrderResponseVO>,
+    onClickable: (String) -> Unit = {}
 ) {
     val delivery = mutableListOf<OrderResponseVO>()
     val order = mutableListOf<OrderResponseVO>()
@@ -31,7 +32,10 @@ fun OrderTabMain(
         }
     }
     when (index) {
-        NumbersUtils.NUMBER_ZERO -> PendingDeliveryScreen(ordersResponseVO = delivery)
+        NumbersUtils.NUMBER_ZERO -> PendingDeliveryScreen(
+            ordersResponseVO = delivery,
+            onClickable = onClickable
+        )
 
         NumbersUtils.NUMBER_ONE -> PendingPickupScreen(ordersResponseVO= ordersResponseVO)
 

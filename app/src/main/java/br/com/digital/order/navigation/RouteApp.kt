@@ -7,5 +7,6 @@ sealed class RouteApp(val item: String) {
     data object Delivery : RouteApp(item = ItemNavigation.DELIVERY.name)
     data object Order : RouteApp(item = ItemNavigation.ORDER.name)
     data object Reservation : RouteApp(item = ItemNavigation.RESERVATION.name)
+    data object OrderDetail : RouteApp(item = ItemNavigation.ORDER_DETAIL.name)
     data object Settings : RouteApp(item = ItemNavigation.SETTINGS.name)
 }

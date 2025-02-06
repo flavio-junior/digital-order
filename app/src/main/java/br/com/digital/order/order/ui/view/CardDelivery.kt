@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import br.com.digital.order.navigation.RouteApp
 import br.com.digital.order.order.data.vo.OrderResponseVO
 import br.com.digital.order.order.domain.factory.addressFactory
 import br.com.digital.order.order.utils.OrderUtils.NUMBER_ITEMS
@@ -25,13 +26,18 @@ import br.com.digital.order.utils.onBorder
 @Composable
 fun CardDelivery(
     orderResponseVO: OrderResponseVO,
-    onItemSelected: (Pair<OrderResponseVO, Int>) -> Unit = {}
+    onItemSelected: (Pair<OrderResponseVO, Int>) -> Unit = {},
+    onClickable: (String) -> Unit = {}
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(space = Themes.size.spaceSize4),
         modifier = Modifier
             .onBorder(
-                onClick = { onItemSelected(Pair(first = orderResponseVO, second = NUMBER_ONE)) },
+                onClick = {
+                    onItemSelected(Pair(first = orderResponseVO, second = NUMBER_ONE))
+                    onClickable(RouteApp.OrderDetail.item)
+
+                },
                 color = Themes.colors.primary,
                 spaceSize = Themes.size.spaceSize12,
                 width = Themes.size.spaceSize2

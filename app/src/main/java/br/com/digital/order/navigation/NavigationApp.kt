@@ -11,6 +11,7 @@ import br.com.digital.order.dashboard.ui.view.DashboardScreen
 import br.com.digital.order.dashboard.ui.view.DeliveryScreen
 import br.com.digital.order.dashboard.ui.view.OrderScreen
 import br.com.digital.order.dashboard.ui.view.ReservationScreen
+import br.com.digital.order.order.ui.view.OrderDetailsScreen
 import br.com.digital.order.splash.SplashScreen
 
 @Composable
@@ -28,7 +29,7 @@ fun NavigationApp(
 private fun NavGraphBuilder.splashScreenNavigation(
     navController: NavHostController
 ) {
-    composable(RouteApp.SplashScreen.item) {
+    composable(route = RouteApp.SplashScreen.item) {
         SplashScreen(
             goToSignInScreen = {
                 navController.navigate(route = RouteApp.SignIn.item) {
@@ -48,7 +49,7 @@ private fun NavGraphBuilder.splashScreenNavigation(
 private fun NavGraphBuilder.signInNavigation(
     navController: NavHostController
 ) {
-    composable(RouteApp.SignIn.item) {
+    composable(route = RouteApp.SignIn.item) {
         SignInScreen(
             goToDashboardScreen = {
                 navController.navigate(route = RouteApp.Dashboard.item) {
@@ -72,10 +73,10 @@ private fun NavGraphBuilder.signInNavigation(
 private fun NavGraphBuilder.dashboardNavigation(
     navController: NavHostController
 ) {
-    composable(RouteApp.Dashboard.item) {
+    composable(route = RouteApp.Dashboard.item) {
         DashboardScreen(navGraph = navController)
     }
-    composable(RouteApp.Delivery.item) {
+    composable(route = RouteApp.Delivery.item) {
         DeliveryScreen(
             goToBack = {
                 navController.popBackStack()
@@ -89,7 +90,8 @@ private fun NavGraphBuilder.dashboardNavigation(
             }
         )
     }
-    composable(RouteApp.Order.item) {
+
+    composable(route = RouteApp.Order.item) {
         OrderScreen(
             goToBack = {
                 navController.popBackStack()
@@ -103,7 +105,8 @@ private fun NavGraphBuilder.dashboardNavigation(
             }
         )
     }
-    composable(RouteApp.Reservation.item) {
+
+    composable(route = RouteApp.Reservation.item) {
         ReservationScreen(
             goToBack = {
                 navController.popBackStack()
@@ -112,6 +115,21 @@ private fun NavGraphBuilder.dashboardNavigation(
                 navigateToAlternativeRoutes(
                     navController = navController,
                     currentScreen = RouteApp.Reservation.item,
+                    alternativeRoutes = it
+                )
+            }
+        )
+    }
+
+    composable(route = RouteApp.OrderDetail.item) {
+        OrderDetailsScreen(
+            goToBack = {
+                navController.popBackStack()
+            },
+            goToAlternativeRoutes = {
+                navigateToAlternativeRoutes(
+                    navController = navController,
+                    currentScreen = RouteApp.OrderDetail.item,
                     alternativeRoutes = it
                 )
             }

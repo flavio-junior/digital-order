@@ -15,15 +15,9 @@ android {
         applicationId = "br.com.digital.order"
         minSdk = 23
         targetSdk = 34
-        versionCode = 2
-        versionName = "1.0.0"
-
+        versionCode = 3
+        versionName = "1.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildFeatures {
-        buildConfig = true
-        compose = true
     }
 
     buildTypes {
@@ -69,6 +63,7 @@ android {
         jvmTarget = "11"
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
 }
