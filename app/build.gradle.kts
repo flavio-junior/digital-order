@@ -16,22 +16,30 @@ android {
         applicationId = "br.com.digital.order"
         minSdk = 23
         targetSdk = 34
-        versionCode = 3
-        versionName = "1.1"
+        versionCode = 4
+        versionName = "1.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    val proprieties = Properties()
+    proprieties.load(project.rootProject.file("local.properties").inputStream())
+
+    signingConfigs {
+        create("release") {
+            storeFile = file(proprieties.getProperty("STORE_FILE"))
+            storePassword = proprieties.getProperty("STORE_PASSWORD")
+            keyAlias = proprieties.getProperty("KEY_ALIAS")
+            keyPassword = proprieties.getProperty("KEY_PASSWORD")
+        }
     }
 
     buildTypes {
         debug {
             isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
+                getDefaultProguardFile(name = "proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-
-            val proprieties = Properties()
-            proprieties.load(project.rootProject.file("local.properties").inputStream())
-
             buildConfigField(
                 type = "String",
                 name = "BASE_URL_APP",
@@ -40,15 +48,7 @@ android {
         }
 
         release {
-            isMinifyEnabled = true
-            proguardFiles(
-                getDefaultProguardFile(name = "proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-
-            val proprieties = Properties()
-            proprieties.load(project.rootProject.file("local.properties").inputStream())
-
+            signingConfig = signingConfigs.getByName(name = "release")
             buildConfigField(
                 type = "String",
                 name = "BASE_URL_APP",
