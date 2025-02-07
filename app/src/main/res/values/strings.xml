@@ -10,7 +10,9 @@
     <string name="reservations">Reservas</string>
     <string name="delivery">Delivery</string>
     <string name="name">Nome</string>
+    <string name="price">Preço</string>
     <string name="quantity">Quantidade</string>
+    <string name="total">Total</string>
     <string name="street">Rua</string>
     <string name="number">Número</string>
     <string name="district">Bairro</string>

@@ -10,7 +10,6 @@ object OrderUtils {
     const val NUMBER_RESERVATIONS = "Número de reservas:"
 }
 
-
 fun converterReservationVOtoDTO(
     reservation: ReservationResponseVO
 ): ReservationResponseDTO {

@@ -25,6 +25,7 @@ import br.com.digital.order.networking.resources.ObserveNetworkStateHandler
 import br.com.digital.order.order.data.dto.UpdateObjectRequestDTO
 import br.com.digital.order.order.ui.viewmodel.OrderViewModel
 import br.com.digital.order.order.ui.viewmodel.ResetOrder
+import br.com.digital.order.product.domain.factory.typeOrderFactory
 import br.com.digital.order.reservation.data.vo.ObjectResponseVO
 import br.com.digital.order.ui.components.ActionButton
 import br.com.digital.order.ui.components.Description
@@ -41,6 +42,7 @@ import br.com.digital.order.utils.StringsUtils.CANCEL
 import br.com.digital.order.utils.StringsUtils.CONFIRM
 import br.com.digital.order.utils.StringsUtils.DELETE_ITEM
 import br.com.digital.order.utils.StringsUtils.DELETE_OBJECT
+import br.com.digital.order.utils.formatterMaskToMoney
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -68,8 +70,35 @@ fun DetailsObjectScreen(
                 .verticalScroll(state = rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(space = Themes.size.spaceSize16)
         ) {
-            Description(description = objectResponseVO.toString())
-            Description(description = orderId.toString())
+            Title(
+                title = typeOrderFactory(type = objectResponseVO?.type),
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center
+            )
+            TextField(
+                enabled = false,
+                label = R.string.name,
+                value = objectResponseVO?.name ?: EMPTY_TEXT,
+                onValueChange = {}
+            )
+            TextField(
+                enabled = false,
+                label = R.string.price,
+                value = formatterMaskToMoney(price = objectResponseVO?.price ?: 0.0),
+                onValueChange = {},
+            )
+            TextField(
+                enabled = false,
+                label = R.string.quantity,
+                value = objectResponseVO?.quantity.toString(),
+                onValueChange = {},
+            )
+            TextField(
+                enabled = false,
+                label = R.string.total,
+                value = formatterMaskToMoney(price = objectResponseVO?.price ?: 0.0),
+                onValueChange = {}
+            )
             CardOverview(
                 orderId = orderId ?: 0,
                 objectId = objectResponseVO?.id ?: 0,
