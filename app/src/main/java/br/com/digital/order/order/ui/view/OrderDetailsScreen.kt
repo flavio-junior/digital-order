@@ -36,6 +36,7 @@ import br.com.digital.order.ui.components.LoadingButton
 import br.com.digital.order.ui.components.ObserveNetworkStateHandler
 import br.com.digital.order.ui.components.OptionButton
 import br.com.digital.order.ui.components.SelectObject
+import br.com.digital.order.ui.components.TextField
 import br.com.digital.order.ui.components.Title
 import br.com.digital.order.ui.theme.Themes
 import br.com.digital.order.utils.OrdersUtils.EMPTY_TEXT
@@ -45,6 +46,7 @@ import br.com.digital.order.utils.StringsUtils.CANCEL
 import br.com.digital.order.utils.StringsUtils.CONFIRM
 import br.com.digital.order.utils.StringsUtils.ITEMS
 import br.com.digital.order.utils.StringsUtils.RESERVATIONS
+import br.com.digital.order.utils.formatterMaskToMoney
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -131,6 +133,18 @@ fun OrderDetailsScreen(
                         )
                     )
                 }
+            )
+            TextField(
+                enabled = false,
+                label = R.string.quantity,
+                value = orderDetailsResponseVO?.quantity.toString(),
+                onValueChange = {},
+            )
+            TextField(
+                enabled = false,
+                label = R.string.total,
+                value = formatterMaskToMoney(price = orderDetailsResponseVO?.total ?: 0.0),
+                onValueChange = {}
             )
             LoadingButton(
                 label = stringResource(id = R.string.cancel_order),
