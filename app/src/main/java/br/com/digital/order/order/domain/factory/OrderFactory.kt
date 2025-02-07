@@ -17,11 +17,24 @@ fun typeOrderFactory(type: TypeOrder? = null): Int? {
     }
 }
 
+val overviewFactory = listOf(
+    PENDING_DELIVERY,
+    DELIVERED
+)
+
 fun statusObject(status: ObjectStatus? = null): String {
-   return when (status) {
+    return when (status) {
         ObjectStatus.PENDING -> PENDING_DELIVERY
         ObjectStatus.DELIVERED -> DELIVERED
         null -> EMPTY_STATUS
+    }
+}
+
+fun statusObject(status: String): ObjectStatus? {
+    return when (status) {
+        PENDING_DELIVERY -> ObjectStatus.PENDING
+        DELIVERED -> ObjectStatus.DELIVERED
+        else -> null
     }
 }
 

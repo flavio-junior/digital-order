@@ -107,4 +107,5 @@ object StringsUtils {
     const val DELETE_OBJECT = "Apagar Item do Pedido?"
     const val DELETE_ITEM = "Apagar Item"
     const val DELETE_RESUME = "Apagar Resumo?"
+    const val UPDATE_STATUS_OVERVIEW = "Atualizar Status do Resumo?"
 }
