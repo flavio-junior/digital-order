@@ -15,6 +15,7 @@ import br.com.digital.order.R
 import br.com.digital.order.dashboard.domain.type.TypeOrder
 import br.com.digital.order.order.data.vo.OrderResponseVO
 import br.com.digital.order.order.data.vo.OrdersResponseVO
+import br.com.digital.order.ui.components.SubTitle
 import br.com.digital.order.ui.components.Title
 import br.com.digital.order.ui.theme.Themes
 
@@ -30,8 +31,8 @@ fun PendingReservationsScreen(
             .padding(all = Themes.size.spaceSize36),
         verticalArrangement = Arrangement.spacedBy(space = Themes.size.spaceSize16)
     ) {
-        Title(
-            title = stringResource(id = R.string.pending_reservations),
+        SubTitle(
+            subTitle = stringResource(id = R.string.pending_reservations),
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth()
         )
