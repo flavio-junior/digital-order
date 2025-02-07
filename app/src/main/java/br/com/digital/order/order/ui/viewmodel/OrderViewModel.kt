@@ -5,7 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.digital.order.common.dto.ObjectRequestDTO
+import br.com.digital.order.dashboard.domain.others.Action
 import br.com.digital.order.networking.resources.ObserveNetworkStateHandler
+import br.com.digital.order.order.data.dto.UpdateObjectRequestDTO
 import br.com.digital.order.order.data.repository.OrderRepository
 import br.com.digital.order.order.data.vo.OrdersResponseVO
 import br.com.digital.order.order.domain.converter.ConverterOrder
@@ -91,6 +93,69 @@ class OrderViewModel(
                         }
                     }
                 }
+        }
+    }
+
+    fun updateOrder(orderId: Long, objectId: Long, updateObject: UpdateObjectRequestDTO) {
+        viewModelScope.launch {
+            when (updateObject.action) {
+                Action.UPDATE_STATUS_OVERVIEW -> {
+                    repository.updateOrder(
+                        orderId = orderId,
+                        objectId = objectId,
+                        updateObject = updateObject
+                    )
+                        .onStart {
+                            _updateStatusOverview.value =
+                                ObserveNetworkStateHandler.Loading(l = true)
+                        }
+                        .collect {
+                            _updateStatusOverview.value = it
+                        }
+                }
+
+                Action.INCREMENT_OVERVIEW -> {
+                    repository.updateOrder(
+                        orderId = orderId,
+                        objectId = objectId,
+                        updateObject = updateObject
+                    )
+                        .onStart {
+                            _incrementOverview.value = ObserveNetworkStateHandler.Loading(l = true)
+                        }
+                        .collect {
+                            _incrementOverview.value = it
+                        }
+                }
+
+                Action.REMOVE_OVERVIEW -> {
+                    repository.updateOrder(
+                        orderId = orderId,
+                        objectId = objectId,
+                        updateObject = updateObject
+                    )
+                        .onStart {
+                            _removeOverview.value = ObserveNetworkStateHandler.Loading(l = true)
+                        }
+                        .collect {
+                            _removeOverview.value = it
+                        }
+                }
+
+                Action.REMOVE_OBJECT -> {
+                    repository.updateOrder(
+                        orderId = orderId,
+                        objectId = objectId,
+                        updateObject = updateObject
+                    )
+                        .onStart {
+                            _removeObject.value = ObserveNetworkStateHandler.Loading(l = true)
+                        }
+                        .collect {
+                            _removeObject.value = it
+                        }
+                }
+            }
         }
     }
 

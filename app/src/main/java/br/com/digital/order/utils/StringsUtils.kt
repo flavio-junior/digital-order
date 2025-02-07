@@ -104,4 +104,6 @@ object StringsUtils {
     const val NO = "Não"
     const val SELECTED_PRINT = "Impressora Selecionada"
     const val SELECT_PRINT = "Selecione uma impressora"
+    const val DELETE_OBJECT = "Apagar Item do Pedido?"
+    const val DELETE_ITEM = "Apagar Item"
 }

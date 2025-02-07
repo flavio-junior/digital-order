@@ -219,6 +219,14 @@ private fun NavGraphBuilder.dashboardNavigation(
             objectResponseVO = objectResponseVO,
             goToBack = {
                 navController.popBackStack()
+            },
+            goToNextScreen = {
+                navController.navigate(route = it) {
+                    popUpTo(RouteApp.ObjectDetail.item) {
+                        inclusive = true
+                    }
+                    launchSingleTop = true
+                }
             }
         )
     }
