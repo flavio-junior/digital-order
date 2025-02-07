@@ -10,11 +10,12 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import br.com.digital.order.R
 import br.com.digital.order.dashboard.domain.others.Action
@@ -30,9 +31,12 @@ import br.com.digital.order.ui.components.Description
 import br.com.digital.order.ui.components.LoadingButton
 import br.com.digital.order.ui.components.ObserveNetworkStateHandler
 import br.com.digital.order.ui.components.SelectObject
+import br.com.digital.order.ui.components.TextField
 import br.com.digital.order.ui.components.Title
 import br.com.digital.order.ui.theme.Themes
+import br.com.digital.order.utils.NumbersUtils.NUMBER_ZERO
 import br.com.digital.order.utils.OrdersUtils.EMPTY_TEXT
+import br.com.digital.order.utils.StringsUtils.ADD_ITEM
 import br.com.digital.order.utils.StringsUtils.CANCEL
 import br.com.digital.order.utils.StringsUtils.CONFIRM
 import br.com.digital.order.utils.StringsUtils.DELETE_ITEM
@@ -66,6 +70,23 @@ fun DetailsObjectScreen(
         ) {
             Description(description = objectResponseVO.toString())
             Description(description = orderId.toString())
+            CardOverview(
+                orderId = orderId ?: 0,
+                objectId = objectResponseVO?.id ?: 0,
+                overviews = objectResponseVO?.overview,
+                goToAlternativeRoutes = goToAlternativeRoutes,
+                onSuccess = {
+                    goToNextScreen(RouteApp.Dashboard.item)
+                }
+            )
+            AddItem(
+                orderId = orderId ?: 0,
+                objectId = objectResponseVO?.id ?: 0,
+                goToAlternativeRoutes = goToAlternativeRoutes,
+                onSuccess = {
+                    goToNextScreen(RouteApp.Dashboard.item)
+                }
+            )
             DeleteObject(
                 orderId = orderId ?: 0,
                 objectId = objectResponseVO?.id ?: 0,
@@ -76,6 +97,121 @@ fun DetailsObjectScreen(
             )
         }
     }
+}
+
+@Composable
+fun AddItem(
+    orderId: Long,
+    objectId: Long,
+    onSuccess: () -> Unit = {},
+    goToAlternativeRoutes: (AlternativesRoutes?) -> Unit = {}
+) {
+    val viewModel: OrderViewModel = koinViewModel()
+    var openDialog by remember { mutableStateOf(value = false) }
+    var observer: Triple<Boolean, Boolean, String> by remember {
+        mutableStateOf(value = Triple(first = false, second = false, third = EMPTY_TEXT))
+    }
+    LoadingButton(
+        label = ADD_ITEM,
+        onClick = {
+            openDialog = true
+        },
+        isEnabled = observer.first
+    )
+    if (openDialog) {
+        AddObject(
+            onDismiss = {
+                openDialog = false
+            },
+            onItemSelected = {
+                openDialog = false
+                observer = Triple(first = true, second = false, third = EMPTY_TEXT)
+                viewModel.updateOrder(
+                    orderId = orderId,
+                    objectId = objectId,
+                    updateObject = UpdateObjectRequestDTO(
+                        action = Action.INCREMENT_OVERVIEW,
+                        quantity = it
+                    )
+                )
+            }
+        )
+    }
+    ObserveNetworkStateHandlerIncrementOverview(
+        viewModel = viewModel,
+        goToAlternativeRoutes = goToAlternativeRoutes,
+        onError = {
+            observer = it
+        },
+        onSuccessful = {
+            onSuccess()
+        }
+    )
+}
+
+@Composable
+private fun ObserveNetworkStateHandlerIncrementOverview(
+    viewModel: OrderViewModel,
+    goToAlternativeRoutes: (AlternativesRoutes?) -> Unit = {},
+    onError: (Triple<Boolean, Boolean, String>) -> Unit = {},
+    onSuccessful: () -> Unit = {}
+) {
+    val state: ObserveNetworkStateHandler<Unit> by remember { viewModel.incrementOverview }
+    ObserveNetworkStateHandler(
+        state = state,
+        onLoading = {},
+        onError = {
+            onError(Triple(first = false, second = true, third = it ?: EMPTY_TEXT))
+        },
+        goToAlternativeRoutes = {
+            goToAlternativeRoutes(it)
+        },
+        onSuccess = {
+            onError(Triple(first = false, second = false, third = EMPTY_TEXT))
+            viewModel.resetOrder(reset = ResetOrder.INCREMENT_OVERVIEW)
+            onSuccessful()
+        }
+    )
+}
+
+@Composable
+private fun AddObject(
+    onDismiss: () -> Unit = {},
+    onItemSelected: (Int) -> Unit = {}
+) {
+    SelectObject(
+        onDismiss = onDismiss,
+        body = {
+            Title(
+                title = ADD_ITEM,
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center
+            )
+            var newQuantity: Int by remember { mutableIntStateOf(value = NUMBER_ZERO) }
+            TextField(
+                label = R.string.quantity,
+                value = newQuantity.toString(),
+                keyboardType = KeyboardType.Number,
+                onValueChange = {
+                    newQuantity = it.toIntOrNull() ?: NUMBER_ZERO
+                }
+            )
+            LoadingButton(
+                background = Themes.colors.success,
+                label = CONFIRM,
+                onClick = {
+                    if (newQuantity > NUMBER_ZERO) {
+                        onItemSelected(newQuantity)
+                    }
+                }
+            )
+            LoadingButton(
+                background = Themes.colors.error,
+                label = CANCEL,
+                onClick = onDismiss
+            )
+        }
+    )
 }
 
 @Composable

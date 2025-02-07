@@ -6,6 +6,7 @@ object OrdersUtils {
     const val INVALID_EMAIL = "Este email é inválido!"
     const val ZERO_DOUBLE = "0.0"
     const val WEIGHT_SIZE = 1f
+    const val WEIGHT_SIZE_2 = 2f
     const val DELAY: Long = 3000
     const val UNAUTHORIZED_MESSAGE = "Token expired, please login again."
     const val NUMBER_EQUALS_ZERO = "Informe um valor maior que zero!"

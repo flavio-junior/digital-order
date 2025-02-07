@@ -106,4 +106,5 @@ object StringsUtils {
     const val SELECT_PRINT = "Selecione uma impressora"
     const val DELETE_OBJECT = "Apagar Item do Pedido?"
     const val DELETE_ITEM = "Apagar Item"
+    const val DELETE_RESUME = "Apagar Resumo?"
 }
