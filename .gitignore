@@ -20,3 +20,4 @@ build
 dump.rdb
 
 hs_err_pid*
+/app/release
