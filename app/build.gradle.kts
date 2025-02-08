@@ -16,8 +16,8 @@ android {
         applicationId = "br.com.digital.order"
         minSdk = 23
         targetSdk = 34
-        versionCode = 4
-        versionName = "1.0.0"
+        versionCode = 7
+        versionName = "1.0.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
