@@ -7,6 +7,6 @@ import retrofit2.http.POST
 
 interface DashboardRemoteDataSourceAPI {
 
-    @POST("/api/dashboard/company/orders/v1")
+    @POST("/api/digital/order/orders/v1")
     suspend fun createNewOrder(@Body order: OrderRequestDTO): Response<Unit>
 }

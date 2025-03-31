@@ -7,6 +7,6 @@ import retrofit2.http.Path
 
 interface ProductRemoteDataSourceAPI {
 
-    @GET("/api/dashboard/company/products/v1/find/product/by/{name}")
+    @GET("/api/digital/order/products/v1/find/product/by/{name}")
     suspend fun finProductByName(@Path("name") name: String): Response<List<ProductResponseDTO>>
 }

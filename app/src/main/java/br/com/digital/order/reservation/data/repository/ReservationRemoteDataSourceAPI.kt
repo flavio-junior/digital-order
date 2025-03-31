@@ -7,6 +7,6 @@ import retrofit2.http.Path
 
 interface ReservationRemoteDataSourceAPI {
 
-    @GET("/api/dashboard/company/reservations/v1/find/reservation/by/{name}")
+    @GET("/api/digital/order/reservations/v1/find/reservation/by/{name}")
     suspend fun finReservationByName(@Path("name") name: String): Response<List<ReservationResponseDTO>>
 }

@@ -16,38 +16,38 @@ import retrofit2.http.Query
 
 interface OrderRemoteDataSourceAPI {
 
-    @GET("/api/dashboard/company/orders/v1/open")
+    @GET("/api/digital/order/orders/v1/open")
     suspend fun findAllOpenOrders(
         @Query("page") page: Int,
         @Query("size") size: Int = NumbersUtils.NUMBER_SIXTY,
         @Query("sort") sort: String
     ): Response<OrdersResponseDTO>
 
-    @PUT("/api/dashboard/company/orders/v1/{orderId}/update/object/{objectId}")
+    @PUT("/api/digital/order/orders/v1/{orderId}/update/object/{objectId}")
     suspend fun updateOrder(
         @Path("orderId") orderId: Long,
         @Path("objectId") objectId: Long,
         @Body updateObject: UpdateObjectRequestDTO
     ): Response<Unit>
 
-    @POST("/api/dashboard/company/orders/v1/{orderId}/increment/more/objects/order")
+    @POST("/api/digital/order/orders/v1/{orderId}/increment/more/objects/order")
     suspend fun incrementMoreObjectsOrder(
         @Path("orderId") orderId: Long,
         @Body incrementObjects: List<ObjectRequestDTO>
     ): Response<Unit>
 
-    @POST("/api/dashboard/company/orders/v1/{orderId}/increment/more/reservations/order")
+    @POST("/api/digital/order/orders/v1/{orderId}/increment/more/reservations/order")
     suspend fun incrementMoreReservationsOrder(
         @Path("orderId") orderId: Long,
         @Body reservationsToSava: List<ReservationResponseDTO>
     ): Response<Unit>
 
-    @DELETE("/api/dashboard/company/orders/v1/{orderId}/remove/reservation/{reservationId}")
+    @DELETE("/api/digital/order/orders/v1/{orderId}/remove/reservation/{reservationId}")
     suspend fun removeReservationOrder(
         @Path("orderId") orderId: Long,
         @Path("reservationId") reservationId: Long
     ): Response<Unit>
 
-    @DELETE("/api/dashboard/company/orders/v1/{orderId}")
+    @DELETE("/api/digital/order/orders/v1/{orderId}")
     suspend fun deleteOrder(@Path("orderId") orderId: Long): Response<Unit>
 }
